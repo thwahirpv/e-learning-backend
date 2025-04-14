@@ -35,7 +35,7 @@ class LoginSerializer(serializers.Serializer):
         if not user.is_active: 
             raise serializers.ValidationError("Your account is inactive. Please contact support.")
         
-        data['user'] = data
+        data['user'] = user
         return data
         
 
