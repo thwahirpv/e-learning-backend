@@ -6,7 +6,7 @@ from .utils import send_otp_mail
 
 
 @receiver(post_save, sender=CustomUser)
-def send_otp_mail(sender, instance, created, **kwargs):
+def send_register_otp_mail(sender, instance, created, **kwargs):
     if created:
         send_otp_mail(instance)
     return

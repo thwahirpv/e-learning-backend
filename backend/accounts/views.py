@@ -19,7 +19,8 @@ class RegisterView(APIView):
         if serializer.is_valid():
             serializer.save()
             return Response({
-                'message': 'Successfully registered'
+                'message': 'Successfully registered',
+                'email': serializer.data.get('email')
             }, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -34,6 +35,7 @@ class LoginView(APIView):
             response = Response({
                 'message': 'Login successful',
                 'username': user.username,
+                'email': user.email,
                 'role': user.role
             }, status=status.HTTP_200_OK)
 
@@ -125,6 +127,8 @@ class OTPVerifyView(APIView):
 
         try:
             user = CustomUser.objects.get(email=email)
+            print('------OTP--------------')
+            print(user.otp)
             if user.otp == otp:
                 user.is_verified = True
                 user.otp = ''

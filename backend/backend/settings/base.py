@@ -34,6 +34,7 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'accounts.middleware.JWTMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -56,9 +57,7 @@ TEMPLATES = [
 ]
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'accounts.authentication.CookieJWTAuthentication',
-    )
+    'DEFAULT_AUTHENTICATION_CLASSES': (),
 }
 
 SIMPLE_JWT = {
@@ -117,5 +116,5 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'thwahirxpv@gmail.com'
-EMAIL_HOST_PASSWORD = 'wtua bcns hasz ypio'
+EMAIL_HOST_USER = 'thwahirpvmohd@gmail.com'
+EMAIL_HOST_PASSWORD = 'eozv xjxc kvoc jljn'

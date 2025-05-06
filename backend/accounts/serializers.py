@@ -15,10 +15,10 @@ class RegisterSerializer(serializers.ModelSerializer):
         attrs = super().validate(attrs)
 
         # Custom calidation check for phone number and country code 
-        country_code = str(attrs.get('country_code'))
-        phone_number = str(attrs.get('phone_number'))
-        if not phone_number.replace("+", "").startswith(country_code.replace("+", "")):
-            raise serializers.ValidationError("phone number does not match the selected country code.")
+        # country_code = str(attrs.get('country_code')) 
+        # phone_number = str(attrs.get('phone_number'))
+        # if not phone_number.replace("+", "").startswith(country_code.replace("+", "")):
+        #     raise serializers.ValidationError("phone number does not match the selected country code.")
         return attrs
 
 
@@ -28,12 +28,19 @@ class LoginSerializer(serializers.Serializer):
 
 
     def validate(self, data):
-        user = authenticate(email=data['email'], password=data['password'])
-        if not user: 
-            raise serializers.ValidationError("Invalid credentials")
+        email = data.get('email')
+        password = data.get('password')
+
+        try: 
+            user = CustomUser.objects.get(email=email)
+        except CustomUser.DoesNotExist: 
+            raise serializers.ValidationError({'email': 'Incorrect email'})
+        
+        if not user.check_password(password):
+            raise serializers.ValidationError({'password': 'Incorrect password'})
         
         if not user.is_active: 
-            raise serializers.ValidationError("Your account is inactive. Please contact support.")
+            raise serializers.ValidationError({'block': 'Your account has been blocked. Please contact support for assistance.'})
         
         data['user'] = user
         return data
