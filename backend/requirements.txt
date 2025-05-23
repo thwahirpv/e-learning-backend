@@ -7,4 +7,6 @@ python-dotenv
 django-phonenumber-field[phonenumbers]
 google-auth
 django-cors-headers
+djangorestframework-simplejwt
+djangorestframework
 

@@ -29,6 +29,7 @@ class JWTMiddleware(MiddlewareMixin):
                 Response({'message': "Authentication credentials Invalid."}, status=status.HTTP_401_UNAUTHORIZED) 
         
         req.user = AnonymousUser()
+        return 
 
 
     def process_response(self, req, res): 

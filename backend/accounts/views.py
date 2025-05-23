@@ -56,12 +56,12 @@ class LoginView(APIView):
             return response
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
-
 @method_decorator(csrf_exempt, name='dispatch')
 class GoogleAuthenticationView(APIView):
     
     def post(self, req):
         token = req.data.get('token')
+        role = req.data.get('role')
 
         if not token: 
             return Response({"message": "No token provided"}, status=status.HTTP_400_BAD_REQUEST)
@@ -74,7 +74,8 @@ class GoogleAuthenticationView(APIView):
             
             user, created = CustomUser.objects.get_or_create(email=email, defaults={
                 "email": email,
-                "username": username
+                "username": username,
+                "role": role
             })
 
             if created: 
